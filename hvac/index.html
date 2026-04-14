@@ -44,7 +44,8 @@
   }
   .btn:hover { background: #2a2a5a; color: #fff; border-color: #5555aa; }
   .btn.active { background: #3a3aaa; color: #fff; border-color: #6666cc; }
-  .charts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .charts .chart-card:first-child { grid-column: 1 / -1; }
   .chart-card {
     background: #16162a;
     border: 1px solid #2a2a4a;
