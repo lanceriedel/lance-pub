@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island Wood HVAC Dashboard</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e0e0f0;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #2a2a4a;
+    padding-bottom: 16px;
+  }
+  h1 { font-size: 22px; font-weight: 600; color: #fff; }
+  #updated { font-size: 12px; color: #666; }
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .controls span { font-size: 13px; color: #888; margin-right: 4px; }
+  .btn {
+    padding: 6px 14px;
+    border: 1px solid #3a3a6a;
+    background: #1e1e3a;
+    color: #aaa;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+  }
+  .btn:hover { background: #2a2a5a; color: #fff; border-color: #5555aa; }
+  .btn.active { background: #3a3aaa; color: #fff; border-color: #6666cc; }
+  .charts { display: flex; flex-direction: column; gap: 20px; }
+  .chart-card {
+    background: #16162a;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .chart-card h2 { font-size: 14px; color: #9999cc; margin-bottom: 12px; font-weight: 500; letter-spacing: 0.5px; }
+  .zone-badges { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .badge {
+    padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+    cursor: pointer; opacity: 0.9; transition: opacity 0.15s; user-select: none;
+  }
+  .badge:hover { opacity: 1; }
+  .badge.dim { opacity: 0.35; }
+  #status {
+    background: #1e1e3a; border: 1px solid #3a3a6a; border-radius: 8px;
+    padding: 12px 16px; margin-bottom: 20px;
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .stat { font-size: 12px; color: #888; }
+  .stat strong { color: #ccc; font-size: 15px; display: block; margin-top: 2px; }
+  .loading { text-align: center; padding: 60px; color: #555; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🏡 Island Wood HVAC</h1>
+  </div>
+  <div id="updated">Loading...</div>
+</header>
+
+<div id="status" class="loading">Loading data...</div>
+
+<div class="controls">
+  <span>Range:</span>
+  <button class="btn" onclick="setRange(6)">6h</button>
+  <button class="btn active" onclick="setRange(24)">24h</button>
+  <button class="btn" onclick="setRange(72)">3d</button>
+  <button class="btn" onclick="setRange(168)">7d</button>
+  <button class="btn" onclick="setRange(720)">30d</button>
+  <button class="btn" onclick="setRange(0)">All</button>
+</div>
+
+<div class="charts">
+  <div class="chart-card">
+    <h2>ZONE TEMPERATURES</h2>
+    <div id="chart-temps"></div>
+  </div>
+  <div class="chart-card">
+    <h2>SETPOINTS VS ACTUAL (Jack &amp; Jill)</h2>
+    <div id="chart-setpoints"></div>
+  </div>
+  <div class="chart-card">
+    <h2>INDOOR VS OUTDOOR</h2>
+    <div id="chart-outdoor"></div>
+  </div>
+</div>
+
+<script>
+const COLORS = {
+  jj:   '#e84343',
+  br:   '#3399ff',
+  bi:   '#43c57a',
+  out:  '#f9a825',
+  htsp: '#ff7043',
+  clsp: '#26c6da',
+};
+
+const plotCfg = {
+  responsive: true,
+  displayModeBar: true,
+  modeBarButtonsToRemove: ['select2d','lasso2d','autoScale2d'],
+  displaylogo: false,
+};
+
+const layoutBase = (title) => ({
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor: '#1a1a2e',
+  font: { color: '#aaaacc', family: '-apple-system, sans-serif', size: 12 },
+  title: { text: '', font: { size: 13 } },
+  margin: { t: 20, b: 60, l: 50, r: 20 },
+  xaxis: {
+    gridcolor: '#2a2a4a', zerolinecolor: '#3a3a5a',
+    type: 'date', tickformat: '%m/%d %H:%M',
+    tickangle: -30,
+  },
+  yaxis: {
+    gridcolor: '#2a2a4a', zerolinecolor: '#3a3a5a',
+    title: { text: '°F', font: { size: 11 } },
+  },
+  legend: {
+    bgcolor: 'rgba(0,0,0,0)', font: { size: 11 },
+    orientation: 'h', x: 0, y: -0.2,
+  },
+  hovermode: 'x unified',
+  hoverlabel: { bgcolor: '#1e1e3e', bordercolor: '#5555aa', font: { size: 11 } },
+});
+
+let allData = [];
+let activeRangeHours = 24;
+
+function filterByRange(rows, hours) {
+  if (!hours) return rows;
+  const cutoff = new Date(Date.now() - hours * 3600 * 1000);
+  return rows.filter(r => new Date(r.ts) >= cutoff);
+}
+
+function line(xs, ys, name, color, dash='solid', width=2) {
+  return {
+    x: xs, y: ys, name,
+    type: 'scatter', mode: 'lines',
+    line: { color, width, dash },
+    connectgaps: true,
+    hovertemplate: `%{y:.1f}°F<extra>${name}</extra>`,
+  };
+}
+
+function renderAll(hours) {
+  const rows = filterByRange(allData, hours);
+  if (!rows.length) return;
+  const ts = rows.map(r => r.ts);
+
+  // Chart 1: Zone temps
+  Plotly.react('chart-temps', [
+    line(ts, rows.map(r=>r.jj),  'Jack & Jill',     COLORS.jj),
+    line(ts, rows.map(r=>r.br),  'Bunk Room',        COLORS.br),
+    line(ts, rows.map(r=>r.bi),  'Bedroom Island',   COLORS.bi),
+  ], layoutBase(), plotCfg);
+
+  // Chart 2: Setpoints vs actual
+  Plotly.react('chart-setpoints', [
+    line(ts, rows.map(r=>r.jj),   'Actual (J&J)',   COLORS.jj,  'solid', 2.5),
+    line(ts, rows.map(r=>r.htsp), 'Heat Setpoint',  COLORS.htsp,'dash',  1.5),
+    line(ts, rows.map(r=>r.clsp), 'Cool Setpoint',  COLORS.clsp,'dash',  1.5),
+  ], layoutBase(), plotCfg);
+
+  // Chart 3: Indoor vs outdoor
+  Plotly.react('chart-outdoor', [
+    line(ts, rows.map(r=>r.jj),  'Jack & Jill',   COLORS.jj),
+    line(ts, rows.map(r=>r.br),  'Bunk Room',      COLORS.br),
+    line(ts, rows.map(r=>r.bi),  'Bedroom Island', COLORS.bi),
+    line(ts, rows.map(r=>r.out), 'Outdoor',        COLORS.out, 'dot', 2.5),
+  ], layoutBase(), plotCfg);
+}
+
+function setRange(hours) {
+  activeRangeHours = hours;
+  document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderAll(hours);
+}
+
+async function loadData() {
+  try {
+    const resp = await fetch('hvac_data.json?t=' + Date.now());
+    const data = await resp.json();
+    allData = data.rows;
+
+    // Update status bar with latest readings
+    const latest = {};
+    [...allData].reverse().forEach(r => {
+      if (r.jj && !latest.jj) latest.jj = r;
+      if (r.br && !latest.br) latest.br = r;
+      if (r.bi && !latest.bi) latest.bi = r;
+    });
+    const last = latest.jj || latest.br || latest.bi || {};
+
+    document.getElementById('status').innerHTML = `
+      <div class="stat">Jack &amp; Jill<strong>${latest.jj?.jj?.toFixed(1) ?? '--'}°F</strong></div>
+      <div class="stat">Bunk Room<strong>${latest.br?.br?.toFixed(1) ?? '--'}°F</strong></div>
+      <div class="stat">Bedroom Island<strong>${latest.bi?.bi?.toFixed(1) ?? '--'}°F</strong></div>
+      <div class="stat">Outdoor<strong>${last.out?.toFixed(1) ?? '--'}°F</strong></div>
+      <div class="stat">Heat SP<strong>${last.htsp?.toFixed(0) ?? '--'}°F</strong></div>
+      <div class="stat">Cool SP<strong>${last.clsp?.toFixed(0) ?? '--'}°F</strong></div>
+      <div class="stat">Mode<strong style="text-transform:capitalize">${last.mode ?? '--'}</strong></div>
+    `;
+    document.getElementById('updated').textContent = 'Updated: ' + new Date(data.updated).toLocaleString();
+    renderAll(activeRangeHours);
+  } catch(e) {
+    document.getElementById('status').innerHTML = `<span style="color:#e55">Failed to load hvac_data.json — run the log script first.</span>`;
+    console.error(e);
+  }
+}
+
+loadData();
+// Auto-refresh every 5 min
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
