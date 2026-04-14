@@ -53,7 +53,7 @@
     padding: 12px 16px 8px;
   }
   .chart-card h2 { font-size: 11px; color: #9999cc; margin-bottom: 6px; font-weight: 600; letter-spacing: 0.8px; }
-  .chart-wrap { width: 100%; height: 170px; }
+  .chart-wrap { width: 100%; height: 195px; }
   #status {
     background: #1e1e3a; border: 1px solid #3a3a6a; border-radius: 8px;
     padding: 10px 16px; margin-bottom: 10px;
@@ -122,19 +122,19 @@ const layoutBase = (title) => ({
   plot_bgcolor: '#1a1a2e',
   font: { color: '#aaaacc', family: '-apple-system, sans-serif', size: 12 },
   title: { text: '', font: { size: 13 } },
-  margin: { t: 8, b: 50, l: 46, r: 10 },
+  margin: { t: 28, b: 36, l: 46, r: 10 },
   xaxis: {
     gridcolor: '#2a2a4a', zerolinecolor: '#3a3a5a',
     type: 'date', tickformat: '%m/%d %H:%M',
-    tickangle: -30,
+    tickangle: -20,
   },
   yaxis: {
     gridcolor: '#2a2a4a', zerolinecolor: '#3a3a5a',
     title: { text: '°F', font: { size: 11 } },
   },
   legend: {
-    bgcolor: 'rgba(0,0,0,0)', font: { size: 11 },
-    orientation: 'h', x: 0, y: -0.2,
+    bgcolor: 'rgba(20,20,40,0.8)', font: { size: 10 },
+    orientation: 'h', x: 0, y: 1.15, xanchor: 'left', yanchor: 'top',
   },
   hovermode: 'x unified',
   hoverlabel: { bgcolor: '#1e1e3e', bordercolor: '#5555aa', font: { size: 11 } },
@@ -171,19 +171,19 @@ function renderAll(hours) {
     line(ts, rows.map(r=>r.bi),  'Bedroom Island',   COLORS.bi),
   ], layoutBase(), plotCfg);
 
-  // Chart 2: Setpoints vs actual
+  // Chart 2: Setpoints vs actual (short names for narrow column)
   Plotly.react('chart-setpoints', [
-    line(ts, rows.map(r=>r.jj),   'Actual (J&J)',   COLORS.jj,  'solid', 2.5),
-    line(ts, rows.map(r=>r.htsp), 'Heat Setpoint',  COLORS.htsp,'dash',  1.5),
-    line(ts, rows.map(r=>r.clsp), 'Cool Setpoint',  COLORS.clsp,'dash',  1.5),
+    line(ts, rows.map(r=>r.jj),   'Actual',     COLORS.jj,  'solid', 2.5),
+    line(ts, rows.map(r=>r.htsp), 'Heat SP',    COLORS.htsp,'dash',  1.5),
+    line(ts, rows.map(r=>r.clsp), 'Cool SP',    COLORS.clsp,'dash',  1.5),
   ], layoutBase(), plotCfg);
 
-  // Chart 3: Indoor vs outdoor
+  // Chart 3: Indoor vs outdoor (short names for narrow column)
   Plotly.react('chart-outdoor', [
-    line(ts, rows.map(r=>r.jj),  'Jack & Jill',   COLORS.jj),
-    line(ts, rows.map(r=>r.br),  'Bunk Room',      COLORS.br),
-    line(ts, rows.map(r=>r.bi),  'Bedroom Island', COLORS.bi),
-    line(ts, rows.map(r=>r.out), 'Outdoor',        COLORS.out, 'dot', 2.5),
+    line(ts, rows.map(r=>r.jj),  'J&J',     COLORS.jj),
+    line(ts, rows.map(r=>r.br),  'Bunk',    COLORS.br),
+    line(ts, rows.map(r=>r.bi),  'Island',  COLORS.bi),
+    line(ts, rows.map(r=>r.out), 'Outdoor', COLORS.out, 'dot', 2.5),
   ], layoutBase(), plotCfg);
 }
 
