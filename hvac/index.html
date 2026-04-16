@@ -46,6 +46,7 @@
   .btn.active { background: #3a3aaa; color: #fff; border-color: #6666cc; }
   .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .charts .chart-card:first-child { grid-column: 1 / -1; }
+  .charts .chart-card.full { grid-column: 1 / -1; }
   .chart-card {
     background: #16162a;
     border: 1px solid #2a2a4a;
@@ -92,9 +93,17 @@
   </div>
   <div class="chart-card">
     <h2>SETPOINTS VS ACTUAL (Jack &amp; Jill)</h2>
-    <div id="chart-setpoints" class="chart-wrap"></div>
+    <div id="chart-sp-jj" class="chart-wrap"></div>
   </div>
   <div class="chart-card">
+    <h2>SETPOINTS VS ACTUAL (Bunk Room)</h2>
+    <div id="chart-sp-br" class="chart-wrap"></div>
+  </div>
+  <div class="chart-card full">
+    <h2>SETPOINTS VS ACTUAL (Bedroom Island)</h2>
+    <div id="chart-sp-bi" class="chart-wrap"></div>
+  </div>
+  <div class="chart-card full">
     <h2>INDOOR VS OUTDOOR</h2>
     <div id="chart-outdoor" class="chart-wrap"></div>
   </div>
@@ -175,11 +184,23 @@ function renderAll(hours) {
     line(ts, rows.map(r=>r.bi),  'Bedroom Island',   COLORS.bi),
   ], layoutBase(), plotCfg);
 
-  // Chart 2: Setpoints vs actual (short names for narrow column)
-  Plotly.react('chart-setpoints', [
-    line(ts, rows.map(r=>r.jj),   'Actual',     COLORS.jj,  'solid', 2.5),
-    line(ts, rows.map(r=>r.htsp), 'Heat SP',    COLORS.htsp,'dash',  1.5),
-    line(ts, rows.map(r=>r.clsp), 'Cool SP',    COLORS.clsp,'dash',  1.5),
+  // Charts 2a/2b/2c: Setpoints vs actual — one per room
+  Plotly.react('chart-sp-jj', [
+    line(ts, rows.map(r=>r.jj),      'Actual',  COLORS.jj,  'solid', 2.5),
+    line(ts, rows.map(r=>r.jj_htsp || r.htsp), 'Heat SP', COLORS.htsp, 'dash', 1.5),
+    line(ts, rows.map(r=>r.jj_clsp || r.clsp), 'Cool SP', COLORS.clsp, 'dash', 1.5),
+  ], layoutBase(), plotCfg);
+
+  Plotly.react('chart-sp-br', [
+    line(ts, rows.map(r=>r.br),      'Actual',  COLORS.br,  'solid', 2.5),
+    line(ts, rows.map(r=>r.br_htsp || r.htsp), 'Heat SP', COLORS.htsp, 'dash', 1.5),
+    line(ts, rows.map(r=>r.br_clsp || r.clsp), 'Cool SP', COLORS.clsp, 'dash', 1.5),
+  ], layoutBase(), plotCfg);
+
+  Plotly.react('chart-sp-bi', [
+    line(ts, rows.map(r=>r.bi),      'Actual',  COLORS.bi,  'solid', 2.5),
+    line(ts, rows.map(r=>r.bi_htsp || r.htsp), 'Heat SP', COLORS.htsp, 'dash', 1.5),
+    line(ts, rows.map(r=>r.bi_clsp || r.clsp), 'Cool SP', COLORS.clsp, 'dash', 1.5),
   ], layoutBase(), plotCfg);
 
   // Chart 3: Indoor vs outdoor (short names for narrow column)
