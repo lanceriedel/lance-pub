@@ -110,13 +110,19 @@
 </div>
 
 <script>
+// Semantic colors — consistent meaning across ALL charts
+// actual = blue, htsp = orange-red, clsp = cyan
+// Room colors (overview charts only) avoid those three
 const COLORS = {
-  jj:   '#e84343',
-  br:   '#3399ff',
-  bi:   '#43c57a',
-  out:  '#f9a825',
-  htsp: '#ff7043',
-  clsp: '#26c6da',
+  // Semantic — used in setpoint vs actual charts
+  actual: '#3399ff',   // blue   — always means "actual temp"
+  htsp:   '#ff7043',   // orange — always means heat setpoint
+  clsp:   '#26c6da',   // cyan   — always means cool setpoint
+  // Room identity — used only in multi-room overview charts
+  jj:     '#e84343',   // red
+  br:     '#a78bfa',   // lavender
+  bi:     '#43c57a',   // green
+  out:    '#f9a825',   // amber
 };
 
 const plotCfg = {
@@ -185,22 +191,23 @@ function renderAll(hours) {
   ], layoutBase(), plotCfg);
 
   // Charts 2a/2b/2c: Setpoints vs actual — one per room
+  // Setpoint charts: Actual = blue, Heat SP = orange, Cool SP = cyan — same in every chart
   Plotly.react('chart-sp-jj', [
-    line(ts, rows.map(r=>r.jj),      'Actual',  COLORS.jj,  'solid', 2.5),
-    line(ts, rows.map(r=>r.jj_htsp || r.htsp), 'Heat SP', COLORS.htsp, 'dash', 1.5),
-    line(ts, rows.map(r=>r.jj_clsp || r.clsp), 'Cool SP', COLORS.clsp, 'dash', 1.5),
+    line(ts, rows.map(r=>r.jj),                 'Actual',  COLORS.actual, 'solid', 2.5),
+    line(ts, rows.map(r=>r.jj_htsp || r.htsp),  'Heat SP', COLORS.htsp,   'dash',  1.5),
+    line(ts, rows.map(r=>r.jj_clsp || r.clsp),  'Cool SP', COLORS.clsp,   'dash',  1.5),
   ], layoutBase(), plotCfg);
 
   Plotly.react('chart-sp-br', [
-    line(ts, rows.map(r=>r.br),      'Actual',  COLORS.br,  'solid', 2.5),
-    line(ts, rows.map(r=>r.br_htsp || r.htsp), 'Heat SP', COLORS.htsp, 'dash', 1.5),
-    line(ts, rows.map(r=>r.br_clsp || r.clsp), 'Cool SP', COLORS.clsp, 'dash', 1.5),
+    line(ts, rows.map(r=>r.br),                 'Actual',  COLORS.actual, 'solid', 2.5),
+    line(ts, rows.map(r=>r.br_htsp || r.htsp),  'Heat SP', COLORS.htsp,   'dash',  1.5),
+    line(ts, rows.map(r=>r.br_clsp || r.clsp),  'Cool SP', COLORS.clsp,   'dash',  1.5),
   ], layoutBase(), plotCfg);
 
   Plotly.react('chart-sp-bi', [
-    line(ts, rows.map(r=>r.bi),      'Actual',  COLORS.bi,  'solid', 2.5),
-    line(ts, rows.map(r=>r.bi_htsp || r.htsp), 'Heat SP', COLORS.htsp, 'dash', 1.5),
-    line(ts, rows.map(r=>r.bi_clsp || r.clsp), 'Cool SP', COLORS.clsp, 'dash', 1.5),
+    line(ts, rows.map(r=>r.bi),                 'Actual',  COLORS.actual, 'solid', 2.5),
+    line(ts, rows.map(r=>r.bi_htsp || r.htsp),  'Heat SP', COLORS.htsp,   'dash',  1.5),
+    line(ts, rows.map(r=>r.bi_clsp || r.clsp),  'Cool SP', COLORS.clsp,   'dash',  1.5),
   ], layoutBase(), plotCfg);
 
   // Chart 3: Indoor vs outdoor (short names for narrow column)
