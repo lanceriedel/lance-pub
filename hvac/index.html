@@ -228,7 +228,8 @@ function setRange(hours) {
 
 async function loadData() {
   try {
-    const resp = await fetch('hvac_data.json?t=' + Date.now());
+    // Data lives on the 'data' branch so updates don't trigger Pages deploys
+    const resp = await fetch('https://raw.githubusercontent.com/lanceriedel/lance-pub/data/hvac/hvac_data.json?t=' + Date.now());
     const data = await resp.json();
     allData = data.rows;
 
