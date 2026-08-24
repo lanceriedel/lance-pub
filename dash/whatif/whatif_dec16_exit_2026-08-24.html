@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>WHAT-IF: Dec 16 2026 Exit — 2026-08-24</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:1200px;margin:0 auto;
+     padding:2rem;background:#0f172a;color:#e2e8f0}
+h1{font-size:1.7rem;color:#f8fafc;margin-bottom:.25rem}
+h2{font-size:1.1rem;color:#94a3b8;font-weight:500;margin:2rem 0 1rem;
+    border-bottom:1px solid #334155;padding-bottom:.5rem}
+h3{font-size:1rem;color:#cbd5e1;margin:0 0 .75rem}
+h4{font-size:.9rem;margin:.5rem 0;font-weight:600}
+.meta{color:#64748b;font-size:.85rem;margin-bottom:2rem}
+.meta a{color:#3b82f6;text-decoration:none}
+.banner{background:#7c2d12;border:1px solid #f97316;border-radius:8px;padding:1rem 1.5rem;
+         margin:1rem 0;font-size:.95rem}
+.banner b{color:#fed7aa}
+.note{background:#1e293b;border-left:3px solid #334155;padding:.75rem 1rem;
+       margin:.5rem 0;font-size:.85rem;color:#94a3b8}
+.cpa{background:#1e293b;border-left:3px solid #f59e0b;padding:.75rem 1rem;
+      margin:.5rem 0;font-size:.85rem;color:#fde68a}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:.75rem 0}
+.kv{background:#1e293b;border-radius:8px;padding:1rem}
+.lbl{color:#64748b;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}
+.val{color:#f1f5f9;font-size:1.35rem;font-weight:600;margin-top:.25rem}
+.sub{color:#94a3b8;font-size:.78rem;margin-top:.25rem}
+.sc{background:#1e293b;border-radius:8px;padding:1.5rem;margin:1rem 0}
+.side{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.half{}
+table{border-collapse:collapse;width:100%;font-size:.82rem;margin-top:.5rem}
+th{background:#0f172a;color:#94a3b8;padding:.4rem;text-align:right;font-weight:500}
+th:first-child{text-align:left}
+td{padding:.35rem .4rem;text-align:right;border-bottom:1px solid #0f172a;color:#cbd5e1}
+td:first-child{text-align:left;color:#94a3b8}
+.delta{font-size:.85rem;margin:.25rem 0;color:#16a34a}
+@media(max-width:700px){.side{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1>&#127347; WHAT-IF: Dec 16 2026 Retirement Exit</h1>
+<p class='meta'>Generated 2026-08-24 10:27 CDT &middot;
+<a href='index.html'>&#8592; All what-if reports</a> &middot;
+<a href='../'>&#8592; Dash</a></p>
+
+<div class='banner'>
+  <b>&#9888; WHAT-IF SCENARIO — NOT THE STANDING MODEL</b><br>
+  Data source: <b>Plaid live (2026-08-24)</b><br>
+  This scenario is labeled, isolated, and does NOT affect the weekly model, its config, cron, or state files.
+</div>
+
+<h2>Scenario Inputs</h2>
+<div class='g'>
+  <div class='kv'><div class='lbl'>Exit Date</div>
+    <div class='val'>Dec 16 2026</div>
+    <div class='sub'>Employment income stops</div></div>
+  <div class='kv'><div class='lbl'>SHOP Price (fixed)</div>
+    <div class='val'>$140</div>
+    <div class='sub'>Scenario assumption</div></div>
+  <div class='kv'><div class='lbl'>Total SHOP to Sell</div>
+    <div class='val'>31,256</div>
+    <div class='sub'>7,406 now + 11,925 Sep + 11,925 Dec @ 100%</div></div>
+  <div class='kv'><div class='lbl'>SHOP Proceeds</div>
+    <div class='val'>$4.38M</div>
+    <div class='sub'>31,256 × $140</div></div>
+  <div class='kv'><div class='lbl'>Cash Tranches (gross)</div>
+    <div class='val'>$0.95M</div>
+    <div class='sub'>2 × $476,837 (Sep + Dec)</div></div>
+  <div class='kv'><div class='lbl'>Unvested Forfeited</div>
+    <div class='val'>107,328</div>
+    <div class='sub'>$10.73M LTCL @ $99.96/sh</div></div>
+</div>
+
+<div class='cpa'>
+  <b>&#9888; CPA-UNCONFIRMED:</b> Forfeiture of 107,328 unvested shares creates
+  ~$10.73M LTCL in tax year 2026 (Reg 1.83-2(a)), offsetting all 2026 SHOP sale gains
+  → <b>$0 tax on SHOP sale, $0 April 2027 outflow, ~$3.30M carryforward.</b>
+  Verify with tax advisor before relying on this treatment.
+</div>
+
+<h2>Dec 16 Starting Liquid — Build-Up</h2>
+<div class='g'>
+  <div class='kv'><div class='lbl'>Current Investable (Plaid)</div>
+    <div class='val'>$21.60M</div>
+    <div class='sub'>As of 2026-08-24</div></div>
+  <div class='kv'><div class='lbl'>Less: Current SHOP at market</div>
+    <div class='val' style='color:#dc2626'>−$1.11M</div>
+    <div class='sub'>7,406 sh × $150.26</div></div>
+  <div class='kv'><div class='lbl'>Plus: All SHOP at $140</div>
+    <div class='val' style='color:#16a34a'>+$4.38M</div>
+    <div class='sub'>31,256 sh × $140 (100% sale)</div></div>
+  <div class='kv'><div class='lbl'>Plus: Cash Tranches (gross)</div>
+    <div class='val' style='color:#16a34a'>+$0.95M</div>
+    <div class='sub'>Sep + Dec; $0 tax (LTCL offset, CPA-unconfirmed)</div></div>
+  <div class='kv' style='border-top:2px solid #f59e0b'><div class='lbl'>= Dec 16 Starting Liquid</div>
+    <div class='val' style='color:#f59e0b'>$25.82M</div>
+    <div class='sub'>(excl. hard assets $11.22M)</div></div>
+  <div class='kv'><div class='lbl'>vs. $25.7M expectation</div>
+    <div class='val' style='color:#16a34a'>+$0.12M</div>
+    <div class='sub' class='delta'>Delta explained in notes</div></div>
+</div>
+
+<div class='note'>
+  <b>Delta vs $25.7M expectation (+$0.12M):</b><br>
+  Current investable $21.60M (Plaid 2026-08-24) vs plan assumption of ~$21.8M (Aug 14 snapshot).
+  SHOP stripped at $150.26/sh (live) vs plan basis. All else held constant.
+  The delta is within the range of market price movement and balance fluctuations between Aug 14–Aug 24.
+</div>
+
+<h2>Sep 15 Base (standing model) vs Dec 16 What-If</h2>
+<div class='g'>
+  <div class='kv'><div class='lbl'>Sep 15 Base investable</div>
+    <div class='val'>$23.79M</div>
+    <div class='sub'>+11,925 sh + $400K cash, 90% sale, @ $150.26</div></div>
+  <div class='kv'><div class='lbl'>Dec 16 Starting Liquid</div>
+    <div class='val'>$25.82M</div>
+    <div class='sub'>31,256 sh × $140 + 2 × $476,837 gross</div></div>
+  <div class='kv'><div class='lbl'>Incremental Capital</div>
+    <div class='val' style='color:#16a34a'>+$2.02M</div>
+    <div class='sub'>Extra from full liquidation + Dec vest</div></div>
+  <div class='kv'><div class='lbl'>Core Burn (trailing 12mo)</div>
+    <div class='val'>$937K/yr</div>
+    <div class='sub'>Used in "Actual Core" scenario</div></div>
+</div>
+
+<h2>Probability Tables (30 / 35 / 40 yr) — Side by Side</h2>
+
+<div class='sc'>
+  <h3>Conservative — $500K/yr</h3>
+  <div class='side'>
+    <div class='half'>
+      <h4 style='color:#f59e0b'>&#127347; Dec 16 Exit (What-If, SHOP @$140)</h4>
+      <p>Starting: $25.82M | WR: 1.94%</p>
+      <table>
+        <tr><th>Horizon</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>Survival</th></tr>
+        <tr><td>30yr</td><td>$13.26M</td><td>$18.69M</td><td>$26.42M</td><td>$36.72M</td><td>$49.01M</td><td style='color:#16a34a;font-weight:600'>100.0%</td></tr>
+<tr><td>35yr</td><td>$11.72M</td><td>$17.53M</td><td>$26.54M</td><td>$38.63M</td><td>$53.88M</td><td style='color:#16a34a;font-weight:600'>100.0%</td></tr>
+<tr><td>40yr</td><td>$10.12M</td><td>$16.59M</td><td>$26.56M</td><td>$40.84M</td><td>$58.11M</td><td style='color:#16a34a;font-weight:600'>99.7%</td></tr>
+      </table>
+      <p style='margin:.5rem 0 0;font-size:.8rem'>40yr: <span style='color:#16a34a;font-weight:700'>99.7%</span></p>
+    </div>
+    <div class='half'>
+      <h4 style='color:#3b82f6'>&#9200; Sep 15 Base (standing model)</h4>
+      <p>Starting: $23.79M | WR: 2.10%</p>
+      <table>
+        <tr><th>Horizon</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>Survival</th></tr>
+        <tr><td>30yr</td><td>$10.89M</td><td>$15.78M</td><td>$22.73M</td><td>$32.00M</td><td>$43.07M</td><td style='color:#16a34a;font-weight:600'>100.0%</td></tr>
+<tr><td>35yr</td><td>$9.18M</td><td>$14.43M</td><td>$22.48M</td><td>$33.32M</td><td>$47.01M</td><td style='color:#16a34a;font-weight:600'>99.8%</td></tr>
+<tr><td>40yr</td><td>$7.36M</td><td>$13.16M</td><td>$22.07M</td><td>$34.79M</td><td>$50.40M</td><td style='color:#16a34a;font-weight:600'>99.2%</td></tr>
+      </table>
+      <p style='margin:.5rem 0 0;font-size:.8rem'>40yr: <span style='color:#16a34a;font-weight:700'>99.2%</span></p>
+    </div>
+  </div>
+</div>
+
+<div class='sc'>
+  <h3>Moderate — $750K/yr</h3>
+  <div class='side'>
+    <div class='half'>
+      <h4 style='color:#f59e0b'>&#127347; Dec 16 Exit (What-If, SHOP @$140)</h4>
+      <p>Starting: $25.82M | WR: 2.91%</p>
+      <table>
+        <tr><th>Horizon</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>Survival</th></tr>
+        <tr><td>30yr</td><td>$4.65M</td><td>$9.39M</td><td>$16.16M</td><td>$25.16M</td><td>$35.91M</td><td style='color:#16a34a;font-weight:600'>98.0%</td></tr>
+<tr><td>35yr</td><td>$1.15M</td><td>$6.35M</td><td>$13.93M</td><td>$24.23M</td><td>$37.00M</td><td style='color:#ca8a04;font-weight:600'>92.7%</td></tr>
+<tr><td>40yr</td><td>$-0.30M</td><td>$3.11M</td><td>$11.37M</td><td>$22.99M</td><td>$37.89M</td><td style='color:#ca8a04;font-weight:600'>83.7%</td></tr>
+      </table>
+      <p style='margin:.5rem 0 0;font-size:.8rem'>40yr: <span style='color:#ca8a04;font-weight:700'>83.7%</span></p>
+    </div>
+    <div class='half'>
+      <h4 style='color:#3b82f6'>&#9200; Sep 15 Base (standing model)</h4>
+      <p>Starting: $23.79M | WR: 3.15%</p>
+      <table>
+        <tr><th>Horizon</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>Survival</th></tr>
+        <tr><td>30yr</td><td>$2.22M</td><td>$6.46M</td><td>$12.49M</td><td>$20.44M</td><td>$30.10M</td><td style='color:#16a34a;font-weight:600'>95.3%</td></tr>
+<tr><td>35yr</td><td>$-0.23M</td><td>$3.19M</td><td>$9.86M</td><td>$18.98M</td><td>$30.20M</td><td style='color:#ca8a04;font-weight:600'>85.8%</td></tr>
+<tr><td>40yr</td><td>$-0.51M</td><td>$-0.04M</td><td>$6.94M</td><td>$17.15M</td><td>$30.26M</td><td style='color:#ca8a04;font-weight:600'>73.6%</td></tr>
+      </table>
+      <p style='margin:.5rem 0 0;font-size:.8rem'>40yr: <span style='color:#ca8a04;font-weight:700'>73.6%</span></p>
+    </div>
+  </div>
+</div>
+
+<div class='sc'>
+  <h3>Actual Core ($937K/yr) — $937K/yr</h3>
+  <div class='side'>
+    <div class='half'>
+      <h4 style='color:#f59e0b'>&#127347; Dec 16 Exit (What-If, SHOP @$140)</h4>
+      <p>Starting: $25.82M | WR: 3.63%</p>
+      <table>
+        <tr><th>Horizon</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>Survival</th></tr>
+        <tr><td>30yr</td><td>$-0.35M</td><td>$2.41M</td><td>$8.62M</td><td>$16.56M</td><td>$26.44M</td><td style='color:#ca8a04;font-weight:600'>83.9%</td></tr>
+<tr><td>35yr</td><td>$-0.70M</td><td>$-0.25M</td><td>$4.50M</td><td>$13.60M</td><td>$24.91M</td><td style='color:#dc2626;font-weight:600'>66.3%</td></tr>
+<tr><td>40yr</td><td>$-0.85M</td><td>$-0.52M</td><td>$0.06M</td><td>$10.24M</td><td>$23.00M</td><td style='color:#dc2626;font-weight:600'>50.2%</td></tr>
+      </table>
+      <p style='margin:.5rem 0 0;font-size:.8rem'>40yr: <span style='color:#dc2626;font-weight:700'>50.2%</span></p>
+    </div>
+    <div class='half'>
+      <h4 style='color:#3b82f6'>&#9200; Sep 15 Base (standing model)</h4>
+      <p>Starting: $23.79M | WR: 3.94%</p>
+      <table>
+        <tr><th>Horizon</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>Survival</th></tr>
+        <tr><td>30yr</td><td>$-0.62M</td><td>$-0.09M</td><td>$4.92M</td><td>$11.93M</td><td>$20.75M</td><td style='color:#ca8a04;font-weight:600'>72.3%</td></tr>
+<tr><td>35yr</td><td>$-0.81M</td><td>$-0.48M</td><td>$0.51M</td><td>$8.34M</td><td>$18.36M</td><td style='color:#dc2626;font-weight:600'>52.1%</td></tr>
+<tr><td>40yr</td><td>$-0.93M</td><td>$-0.66M</td><td>$-0.24M</td><td>$4.47M</td><td>$15.58M</td><td style='color:#dc2626;font-weight:600'>35.7%</td></tr>
+      </table>
+      <p style='margin:.5rem 0 0;font-size:.8rem'>40yr: <span style='color:#dc2626;font-weight:700'>35.7%</span></p>
+    </div>
+  </div>
+</div>
+
+<h2>Hard Asset Backstop (excl. from MC)</h2>
+<div class='note'>
+  TX Lake House: $5.40M | BV Land: $1.00M | Vehicles+Aircraft: $4.82M = <b>$11.22M</b>
+  (not liquidated; backstop only)
+</div>
+
+<h2>Model Assumptions (identical to standing weekly model)</h2>
+<div class='note'>
+  Nominal return 4.8% · Inflation 2.5% · Volatility 6.7%
+  · Real return 2.24% · 12,000 paths · seed=42
+  · Horizons: [30, 35, 40]
+</div>
+
+<div class='note' style='margin-top:2rem;font-size:.75rem;color:#475569'>
+  WHAT-IF scenario only — not financial advice. CPA-unconfirmed tax treatment labeled above.
+  Standing weekly model config and cron unchanged. Generated by ecnal_bot · 2026-08-24.
+</div>
+</body></html>
